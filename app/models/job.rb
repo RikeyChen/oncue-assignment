@@ -27,7 +27,7 @@ class Job < ApplicationRecord
       end
     end
 
-    return trucks if trucks.length > 0
-    errors[:start_time] << "no available trucks during the selected time"
+    errors[:start_time] << "no available trucks during the selected time" if truck.length === 0
+    return trucks
   end
 end

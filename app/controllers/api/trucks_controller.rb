@@ -1,6 +1,6 @@
 class Api::TrucksController < ApplicationController
   def index
-    @trucks = Trucks.all
+    @trucks = Truck.all
     render :index
   end
 

@@ -16,4 +16,15 @@ class Job < ApplicationRecord
   validates :name, :move_date, :start_time, :end_time, :truck_id, presence: true
 
   belongs_to :truck
+
+  def available_trucks
+    trucks = Truck.all
+      .includes(:jobs)
+
+    trucks.select do |truck|
+      truck.jobs.all? do |job|
+        job.start_time.hour > end_time.hour || job.end_time.hour < start_time.hour
+      end
+    end
+  end
 end

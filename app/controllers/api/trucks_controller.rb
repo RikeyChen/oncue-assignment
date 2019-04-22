@@ -1,4 +1,4 @@
-class TrucksController < ApplicationController
+class Api::TrucksController < ApplicationController
   def index
     @trucks = Trucks.all
     render :index

@@ -21,10 +21,13 @@ class Job < ApplicationRecord
     trucks = Truck.all
       .includes(:jobs)
 
-    trucks.select do |truck|
+    trucks = trucks.select do |truck|
       truck.jobs.all? do |job|
         job.start_time.hour > end_time.hour || job.end_time.hour < start_time.hour
       end
     end
+
+    return trucks if trucks.length > 0
+    errors[:start_time] << "no available trucks during the selected time"
   end
 end

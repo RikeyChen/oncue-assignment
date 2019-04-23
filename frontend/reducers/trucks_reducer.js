@@ -1,10 +1,10 @@
 import { RECEIVE_TRUCKS } from '../actions/truck_actions';
 
-const trucksReducer = (oldState = {}, action) => {
+const trucksReducer = (oldState = [], action) => {
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_TRUCKS:
-      return action.trucks;
+      return Object.values(action.trucks);
     default:
       return oldState;
   }

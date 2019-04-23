@@ -1,12 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter, Route } from 'react-router-dom';
+import TrucksIndexContainer from "./trucks/trucks_index_container";
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <HashRouter>
-      <div>React is working</div>
-    </HashRouter>
+    <TrucksIndexContainer />
   </Provider>
 );
 

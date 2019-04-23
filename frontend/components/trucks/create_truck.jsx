@@ -26,12 +26,14 @@ class CreateTruck extends React.Component {
     };
   }
 
-  convertTime(time) {
+  convertTime(timeHour) {
     let hour;
-    if (time.includes('pm')) {
-      hour = parseInt(time.split('pm')[0]) + 12;
+    if (timeHour.includes('am')) {
+      hour = timeHour.split('am')[0];
+    } else if (timeHour === '12pm') {
+      hour = timeHour;
     } else {
-      hour = time.split('am')[0];
+      hour = parseInt(timeHour.split('pm')[0]) + 12;
     }
 
     const newTime = new Date();

@@ -4,6 +4,7 @@ import TrucksIndex from './trucks_index';
 
 const mapStatetoProps = state => ({
   trucks: state.trucks,
+  jobs: state.jobs,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -7,7 +7,8 @@ class Api::TrucksController < ApplicationController
   def create
     @truck = Truck.new(truck_params)
 
-    if truck.save
+    if @truck.save
+      @trucks = Truck.all
       render :index
     else
       render json: @truck.errors.full_messages, status: 422

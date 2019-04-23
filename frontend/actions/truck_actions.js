@@ -9,14 +9,14 @@ export const receiveTrucks = trucks => ({
 
 export const fetchTrucks = () => dispatch => (
   TruckApiUtil.fetchTrucks()
-    .then(trucks => (
-      dispatch(receiveTrucks(trucks))
+    .then(payload => (
+      dispatch(receiveTrucks(payload.trucks))
     ))
 );
 
 export const createTruck = truck => dispatch => (
   TruckApiUtil.createTruck(truck)
-    .then(trucks => (
-      dispatch(receiveTrucks(trucks))
+    .then(payload => (
+      dispatch(receiveTrucks(payload.trucks))
     ))
 );

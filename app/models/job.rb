@@ -15,25 +15,27 @@
 class Job < ApplicationRecord
   validates :name, :move_date, :start_time, :end_time, :truck_id, presence: true
 
+  validate :start_comes_before_end
   belongs_to :truck
 
   def available_trucks
-    trucks = Truck.all
-      .includes(:jobs)
+    overlapping_jobs = Job
+      .includes(:truck)
+      .where(move_date: move_date)
+      .where.not('start_time > :end_time OR end_time < :start_time', start_time: start_time, end_time: end_time)
 
-    trucks = trucks.select do |truck|
-      truck_start = truck.start_time.hour
-      truck_end = truck.end_time.hour
-      next if (
-        !start_time.hour.between?(truck_start, truck_end) || !end_time.hour.between?(truck_start, truck_end)
-      )
+    unavailable_trucks = overlapping_jobs.map {|job| job.truck.id}
 
-      truck.jobs.all? do |job|
-        (job.start_time.hour > end_time.hour || job.end_time.hour < start_time.hour)
-      end
-    end
+    available_trucks = Truck.where.not(id: unavailable_trucks)
 
-    errors[:start_time] << "no available trucks during the selected time" if truck.length === 0
-    return trucks
+    errors[:start_time] << "no available trucks during the selected time" if available_trucks.length === 0
+    return available_trucks
+  end
+
+  def start_comes_before_end
+    return if (start_time < end_time)
+
+    errors[:start_time] << "must come before end time"
+    errors[:end_time] << "must come after start time"
   end
 end

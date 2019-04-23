@@ -7,9 +7,9 @@
     end
   end
 
-  json.jobs do
-    truck.jobs.each do |job|
-      json.set! truck.id do
+  truck.jobs.each do |job|
+    json.jobs do
+      json.set! job.id do
         json.extract! job,
           :name,
           :move_date,
